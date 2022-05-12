@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Valider ma commande - La boutique Française{% endblock %}
+
+{% block content %}
+    <h2>Je passe ma commande</h2>
+    <p>Choisissez vos preférence avant de passer votre commande sur La boutique Française.</p>
+    <hr>
+    <div class="row">
+        <div class="col-md-6">
+
+            {% set formHtml %}
+            {{ form(form) }}
+            {% endset %}
+            {{ formHtml|replace({'[br]':'</br>'})|raw }}
+            <br>
+
+        </div>
+        <div class="col-md-6">
+            <b>Récap de ma commande</b><br>
+           {# {{ dump(cart) }} #}
+            {% for product in cart %}
+            <div class="row">
+                <div class="col-2">
+                    <img src="/uploads/{{ product.product.illustration }}" alt="{{ product.product.name }}" height="75px" />
+                </div>
+                <div class="col-8 my-auto">
+                    {{ product.product.name }}<br/>{{ product.product.subtitle }}
+                </div>
+                <div class="col-2 my-auto">
+                    x{{ product.quantity }}<br/>
+                    {{ (product.product.price/100)|number_format(2,',','.') }}€
+                </div>
+            </div>
+            {% endfor %}
+            <b>bouton pour payer</b>
+        </div>
+    </div>
+{% endblock %}
